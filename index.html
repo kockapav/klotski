@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Klotski</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="game-panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Static sliding-block challenge</p>
+            <h1>Klotski</h1>
+            <p class="subtitle">
+              Slide every block with your mouse and guide the largest tile into the glowing target zone.
+            </p>
+          </div>
+          <button id="restart-button" class="restart-button" type="button">Restart</button>
+        </div>
+
+        <div class="status-bar">
+          <div class="status-card">
+            <span class="label">Steps</span>
+            <strong id="step-count">0</strong>
+          </div>
+          <div class="status-card">
+            <span class="label">Time</span>
+            <strong id="time-count">00:00</strong>
+          </div>
+        </div>
+
+        <div class="board-frame">
+          <div class="board-hint">Target zone</div>
+          <div id="board" class="board" aria-label="Klotski game board"></div>
+        </div>
+      </section>
+
+      <aside class="rules-panel">
+        <h2>How to play</h2>
+        <ul>
+          <li>Drag a tile with the mouse to slide it horizontally or vertically.</li>
+          <li>Blocks can only move through empty spaces and never leave the board.</li>
+          <li>Win by moving the largest tile into the highlighted goal area.</li>
+          <li>Use restart any time to return to the original arrangement.</li>
+        </ul>
+      </aside>
+    </main>
+
+    <div id="victory-panel" class="victory-panel hidden" role="dialog" aria-modal="true" aria-labelledby="victory-title">
+      <div class="victory-card">
+        <p class="eyebrow">Puzzle solved</p>
+        <h2 id="victory-title">You cleared the board!</h2>
+        <p id="victory-summary" class="victory-summary"></p>
+        <button id="play-again-button" class="restart-button" type="button">Play again</button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
