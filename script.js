@@ -2,8 +2,38 @@ const COLS = 4;
 const ROWS = 5;
 const GOAL = { x: 1, y: 3 };
 
+const DONKEY_SVG = `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="donkeyTitle donkeyDesc">
+  <title id="donkeyTitle">Donkey</title>
+  <desc id="donkeyDesc">A cartoon donkey face with long ears.</desc>
+  <defs>
+    <linearGradient id="donkeyBg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#fee2e2" />
+      <stop offset="100%" stop-color="#fecdd3" />
+    </linearGradient>
+  </defs>
+  <rect x="8" y="8" width="144" height="144" rx="36" fill="url(#donkeyBg)" />
+  <g fill="#7c5a4f">
+    <path d="M48 56 42 18c-1-7 8-11 13-6l17 18Z" />
+    <path d="M112 56l6-38c1-7-8-11-13-6L88 30Z" />
+  </g>
+  <g fill="#9a6b5b">
+    <path d="M51 54 47 23c0-4 5-6 8-3l12 13Z" />
+    <path d="M109 54l4-31c0-4-5-6-8-3L93 33Z" />
+  </g>
+  <ellipse cx="80" cy="86" rx="44" ry="40" fill="#8b6356" />
+  <ellipse cx="80" cy="104" rx="30" ry="24" fill="#f8d9c4" />
+  <circle cx="64" cy="80" r="6" fill="#1f2937" />
+  <circle cx="96" cy="80" r="6" fill="#1f2937" />
+  <ellipse cx="80" cy="99" rx="7" ry="5" fill="#1f2937" />
+  <path d="M70 113c4 5 16 5 20 0" fill="none" stroke="#1f2937" stroke-linecap="round" stroke-width="4" />
+  <path d="M52 72c4-6 12-10 20-10" fill="none" stroke="#6b4f46" stroke-linecap="round" stroke-width="4" />
+  <path d="M88 62c8 0 16 4 20 10" fill="none" stroke="#6b4f46" stroke-linecap="round" stroke-width="4" />
+  <path d="M61 120c2 6 8 11 19 11s17-5 19-11" fill="none" stroke="#fff7ed" stroke-linecap="round" stroke-width="3" opacity="0.9" />
+</svg>`;
+
 const START_LAYOUT = [
-  { id: 'hero', label: 'Goal', x: 1, y: 0, width: 2, height: 2, colorClass: 'large' },
+  { id: 'hero', label: 'Donkey', x: 1, y: 0, width: 2, height: 2, colorClass: 'large' },
   { id: 'guard-left-top', label: 'A', x: 0, y: 0, width: 1, height: 2, colorClass: 'blue' },
   { id: 'guard-right-top', label: 'B', x: 3, y: 0, width: 1, height: 2, colorClass: 'green' },
   { id: 'bridge', label: 'C', x: 1, y: 2, width: 2, height: 1, colorClass: 'purple' },
@@ -144,13 +174,21 @@ function setPiecePosition(piece, immediate = false) {
   }
 }
 
+function getPieceMarkup(piece) {
+  if (piece.id === 'hero') {
+    return `<div class="hero-art" aria-label="Donkey tile">${DONKEY_SVG}</div>`;
+  }
+
+  return `<span>${piece.label}</span>`;
+}
+
 function renderBoard(immediate = false) {
   for (const piece of pieces) {
     if (!piece.element) {
       const node = document.createElement('div');
-      node.className = `tile ${piece.colorClass}`;
+      node.className = `tile ${piece.colorClass}${piece.id === 'hero' ? ' hero-tile' : ''}`;
       node.dataset.id = piece.id;
-      node.innerHTML = `<span>${piece.label}</span>`;
+      node.innerHTML = getPieceMarkup(piece);
       board.appendChild(node);
       node.addEventListener('pointerdown', (event) => startDrag(event, piece.id));
       piece.element = node;
